@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <string.h>
+#include <sys/stat.h>
 
 /**
  * Main
@@ -42,6 +43,7 @@ int main(int argc, char **argv)
 
   DIR *d;
   struct dirent *dir;
+  struct stat buf;
 
   while (1)
   {
@@ -71,7 +73,15 @@ int main(int argc, char **argv)
       {
         while ((dir = readdir(d)) != NULL)
         {
+          // Creating character path for printing size
+          char path[200];
 
+          strcat(path, "/");
+          strcpy(path, dir->d_name);
+
+          stat(path, &buf);
+
+          printf("%ld ", buf.st_size);
           printf("%s\n", dir->d_name);
         }
         closedir(d);
