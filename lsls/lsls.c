@@ -40,6 +40,9 @@ int main(int argc, char **argv)
   char *args[MAX_TOKENS];
   int args_count;
 
+  DIR *d;
+  struct dirent *dir;
+
   while (1)
   {
 
@@ -63,7 +66,18 @@ int main(int argc, char **argv)
 
     if (args_count == 0)
     {
-      printf("TRUE");
+      d = opendir(".");
+      if (d)
+      {
+        while ((dir = readdir(d)) != NULL)
+        {
+
+          printf("%s\n", dir->d_name);
+        }
+        closedir(d);
+      }
+
+      continue;
     }
 
     // allow the user to exit by typing 'exit'
