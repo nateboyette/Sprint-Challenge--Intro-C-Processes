@@ -57,14 +57,9 @@ int main(int argc, char **argv)
     {
       break;
     }
+
     // parse the commandline
-
     parse_commandline(commandline, args, &args_count);
-
-    for (int i = 0; i < args_count; i++)
-    {
-      printf("%s\n", args[i]);
-    }
 
     if (args_count == 0)
     {
@@ -105,6 +100,15 @@ int main(int argc, char **argv)
         while ((dir = readdir(d)) != NULL)
         {
 
+          char pathTwo[400];
+          strcpy(pathTwo, args[0]);
+          strcat(pathTwo, dir->d_name);
+          // printf("PATH: %s\n", pathTwo);
+          stat(pathTwo, &buf);
+
+          // printf("file size is %10ld\n", buf.st_size);
+
+          printf("%10ld ", buf.st_size);
           printf("%s\n", dir->d_name);
         }
         closedir(d);
