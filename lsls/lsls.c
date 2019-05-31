@@ -86,7 +86,21 @@ int main(int argc, char **argv)
       break;
     }
 
-    printf("%d\n", args_count);
+    if (args_count > 0)
+    {
+
+      d = opendir(args[0]);
+      if (d)
+      {
+        while ((dir = readdir(d)) != NULL)
+        {
+
+          printf("%s\n", dir->d_name);
+        }
+        closedir(d);
+      }
+      continue;
+    }
   }
 
   return 0;
